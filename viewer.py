@@ -79,7 +79,7 @@ if __name__ == "__main__":
         # Clearing the screen in both, color and depth
         glClear(GL_COLOR_BUFFER_BIT)
 
-        monkey.collide(plataforms)
+        monkey.collide(plataforms, background)
 
         # Drawing the shapes
         background.draw(texturepipeline)

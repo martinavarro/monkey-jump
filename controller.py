@@ -35,21 +35,20 @@ class Controller(object):
             self.model.jumping()
             self.model.jump_left()
             self.plataforms.updatesubida()
-            self.background.updatebg()
-            #self.model.activate()
+            self.background.updateup()
+
 
         elif key == glfw.KEY_D and action == glfw.PRESS:
             self.model.jumping()
             self.model.jump_right()
             self.plataforms.updatesubida()
-            self.background.updatebg()
-            #self.model.activate()
+            self.background.updateup()
 
         elif key == glfw.KEY_W and action == glfw.PRESS:
             self.model.jumping()
             self.model.jump_up()
             self.plataforms.updatesubida()
-            self.background.updatebg()
+            self.background.updateup()
 
             #self.model.activate()
 

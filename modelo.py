@@ -69,7 +69,7 @@ class Monkey(object):
     def activate(self):
         self.logic= True
 
-    def collide(self, plataforms: 'Plataforms'):
+    def collide(self, plataforms: 'Plataforms', background: 'Background'):
         l= self.level #5
 
         if l==0:
@@ -84,18 +84,19 @@ class Monkey(object):
                 print('BAJAAAAA')
                 self.level-=1
                 plataforms.updatecaida()
+                background.updatedown()
             else:
                 print('TODO OKIS!')
         else: #como pueden haber hasta dos plataformas por nivel, este caso indica en el que hay dos plataformas
             if self.pos==plataforms.plataforms[indice].pos_x:
-                print ('TODO OKIS SIGUEE 2')
+                return
             else:
                 if self.pos==plataforms.plataforms[indice+1].pos_x:
-                    print('TODO OKIS SIGUEEE 22')
+                    return
                 else:
-                    print('BAJAAAA 2')
                     self.level -= 1
                     plataforms.updatecaida()
+                    background.updatedown()
 
 
         #si salto y choco con la plataforma qu eestoy revisando, paso
@@ -243,13 +244,18 @@ class Background():
         pipeline.drawShape(self.background)
 
 #mueve el fondo a medida que el monito avanza hacia arriba
-    def moveup(self, c):
+    def move(self, c):
         self.transbackground = np.matmul(tr2.translate(0, 0.2 + c*-0.04, 0), tr2.scale(2, 2.5, 1))
 
-#actualiza el fondo a medida que el monito avanza
-    def updatebg(self):
-        self.moveup(self.level)
+#actualiza el fondo a medida que el monito avanza o retrocede
+    def updateup(self):
         self.level += 1
+        self.move(self.level)
+
+    def updatedown(self):
+        self.level -= 1
+        self.move(self.level)
+
 
 
 
