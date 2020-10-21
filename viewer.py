@@ -61,6 +61,7 @@ if __name__ == "__main__":
 
     controller.set_model(monkey)
     controller.set_plataforms(plataforms)
+    controller.set_background(background)
 
     # Creamos las plataformas a partir del archivo csv
     plataforms.create_plataforms()
