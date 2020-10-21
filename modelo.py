@@ -21,6 +21,7 @@ class Monkey(object):
         self.pos = 0
         self.jump = False
         self.logic = False
+        self.level = 0 #indica en que nivel con respecto al suelo se encuentra el monito
 
     #ayuda a cambiar la expresión del monito cuando este salta
     def jumping(self):
@@ -42,30 +43,60 @@ class Monkey(object):
             pipeline.drawShape(self.monkey)
 
 #mueve el monito hacia la izquierda
-    def move_left(self):
+    def jump_left(self):
         if self.pos == 0:
             self.transmonkey = np.matmul(tr2.translate(-0.7, -0.74, 0), tr2.scale(0.4, 0.4, 1))
             self.pos = -1
         elif self.pos == 1:
             self.transmonkey = np.matmul(tr2.translate(0, -0.74, 0), tr2.scale(0.4, 0.4, 1))
             self.pos = 0
+        self.level +=1
 
 #mueve el monito hacia la derecha
-    def move_right(self):
+    def jump_right(self):
         if self.pos == 0:
             self.transmonkey = np.matmul(tr2.translate(0.7, -0.74, 0), tr2.scale(-0.4, 0.4, 1))
             self.pos = 1
         elif self.pos == -1:
             self.transmonkey = np.matmul(tr2.translate(0, -0.74, 0), tr2.scale(-0.4, 0.4, 1))
             self.pos= 0
+        self.level +=1
 
+    def jump_up(self):
+        self.level+=1
 
+#Activa la logica collide una vez que el monito se despega del suelo y comienza a saltar
     def activate(self):
-        self.logic= not self.logic
+        self.logic= True
 
     def collide(self, plataforms: 'Plataforms'):
-        deleted_eggs = []
-        n= len(plataforms.cont)
+        l= self.level #5
+
+        if l==0:
+            return
+
+        indice= 0 #indicará el indice de la plataforma que nos interesa analizar
+        for i in range(l-1):
+            indice+=plataforms.cont[i]
+
+        if plataforms.cont[l-1] ==1: #si el nivel en el que estamos tiene 1 plataforma solo basta analizar esa
+            if self.pos!= plataforms.plataforms[indice].pos_x: #significa que no estan en la misma posción
+                print('BAJAAAAA')
+                self.level-=1
+                plataforms.updatecaida()
+            else:
+                print('TODO OKIS!')
+        else: #como pueden haber hasta dos plataformas por nivel, este caso indica en el que hay dos plataformas
+            if self.pos==plataforms.plataforms[indice].pos_x:
+                print ('TODO OKIS SIGUEE 2')
+            else:
+                if self.pos==plataforms.plataforms[indice+1].pos_x:
+                    print('TODO OKIS SIGUEEE 22')
+                else:
+                    print('BAJAAAA 2')
+                    self.level -= 1
+                    plataforms.updatecaida()
+
 
         #si salto y choco con la plataforma qu eestoy revisando, paso
         #si salto y no choco con la plataforma que estoy revisando: si son dos en esa fila, debo revisar la otra. y si es una, perdi. ¿ cp
@@ -89,7 +120,7 @@ class Banana():
         self.last= False
 
     def appear(self):
-        self.last= not self.last
+        self.last= True
 
 
     def draw (self, pipeline):
@@ -136,11 +167,11 @@ class Plataform():
         self.pos_y= dy
 
 #bajará la plataforma cuando el monito avance
-    def update(self):
+    def moveup(self):
         self.pos_y -= 1
 
 #elevará la plataforma cuando el monito se caiga
-    def caida(self):
+    def movedown(self):
         self.pos_y +=1
 
 class Plataforms(object):
@@ -180,6 +211,7 @@ class Plataforms(object):
                 dy+=1
                 line_count += 1
                 self.cont.append(cont)
+            print(str(self.cont))
 
 #dibuja las plataformas
     def draw(self, pipeline):
@@ -187,14 +219,14 @@ class Plataforms(object):
             k.draw(pipeline)
 
 #baja las plataformas cuando el monito avanza
-    def update(self):
+    def updatesubida(self):
         for k in self.plataforms:
-            k.update()
+            k.moveup()
 
 #sube las plataformas cuando el monito cae
     def updatecaida(self):
         for k in self.plataforms:
-            k.caida()
+            k.movedown()
 
 
 
@@ -203,7 +235,7 @@ class Background():
     def __init__(self, texture):
         self.background = es.toGPUShape(bs.createTextureQuad(texture), GL_REPEAT, GL_LINEAR)
         self.transbackground = np.matmul(tr2.translate(0, 0.2, 0), tr2.scale(2, 2.5, 1))
-        self.nivel= 0 #indica en que nivel esta el monito, parte desde 0: suelo
+        self.level= 0 #indica en que nivel esta el monito, parte desde 0: suelo
 
     def draw (self, pipeline):
         glUseProgram(pipeline.shaderProgram)
@@ -216,8 +248,8 @@ class Background():
 
 #actualiza el fondo a medida que el monito avanza
     def updatebg(self):
-        self.moveup(self.nivel)
-        self.nivel += 1
+        self.moveup(self.level)
+        self.level += 1
 
 
 

@@ -32,30 +32,30 @@ class Controller(object):
             # Controlador modifica al modelo
 
         elif key == glfw.KEY_A and action == glfw.PRESS:
-            print('Move left')
             self.model.jumping()
-            self.model.move_left()
-            #self.plataforms.update()
-            #self.background.updatebg()
+            self.model.jump_left()
+            self.plataforms.updatesubida()
+            self.background.updatebg()
             #self.model.activate()
 
         elif key == glfw.KEY_D and action == glfw.PRESS:
-            print('Move right')
             self.model.jumping()
-            self.model.move_right()
-            #self.plataforms.update()
-            #self.background.updatebg()
+            self.model.jump_right()
+            self.plataforms.updatesubida()
+            self.background.updatebg()
             #self.model.activate()
 
         elif key == glfw.KEY_W and action == glfw.PRESS:
             self.model.jumping()
-            self.plataforms.update()
+            self.model.jump_up()
+            self.plataforms.updatesubida()
             self.background.updatebg()
+
             #self.model.activate()
 
         elif (key == glfw.KEY_A or key == glfw.KEY_D or key == glfw.KEY_W) and action == glfw.RELEASE:
             self.model.jumping()
-            #self.model.activate()}
+            #self.model.activate()
 
         else:
             print('Unknown key')
