@@ -15,6 +15,9 @@ class Controller(object):
     def set_model(self, m):
         self.model = m
 
+    def set_plataforms(self, p):
+        self.plataforms = p
+
 
     def on_key(self, window, key, scancode, action, mods):
         if not (action == glfw.PRESS or action == glfw.RELEASE):
@@ -29,18 +32,25 @@ class Controller(object):
             print('Move left')
             self.model.jumping()
             self.model.move_left()
+            self.plataforms.update()
+            #self.model.activate()
 
         elif key == glfw.KEY_D and action == glfw.PRESS:
             print('Move right')
             self.model.jumping()
             self.model.move_right()
+            self.plataforms.update()
+            #self.model.activate()
 
         elif key == glfw.KEY_W and action == glfw.PRESS:
             self.model.jumping()
-            print('pyong')
+            self.plataforms.update()
+            #self.model.activate()
 
         elif (key == glfw.KEY_A or key == glfw.KEY_D or key == glfw.KEY_W) and action == glfw.RELEASE:
             self.model.jumping()
+            #self.model.activate()
+
 
         else:
             print('Unknown key')

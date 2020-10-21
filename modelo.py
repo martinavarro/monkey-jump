@@ -14,9 +14,10 @@ class Monkey(object):
 
     def __init__(self, texture1):
         self.monkey = es.toGPUShape(bs.createTextureQuad(texture1), GL_REPEAT, GL_LINEAR)
-        self.transmonkey = np.matmul(tr2.translate(0, -0.8, 0), tr2.scale(0.4, 0.4, 1))
+        self.transmonkey = np.matmul(tr2.translate(0, -0.74, 0), tr2.scale(0.4, 0.4, 1))
         self.pos = 0
         self.jump = False
+        self.logic = False
 
     def jumping(self):
         self.jump= not self.jump
@@ -37,19 +38,33 @@ class Monkey(object):
 
     def move_left(self):
         if self.pos == 0:
-            self.transmonkey = np.matmul(tr2.translate(-0.7, -0.8, 0), tr2.scale(0.4, 0.4, 1))
+            self.transmonkey = np.matmul(tr2.translate(-0.7, -0.74, 0), tr2.scale(0.4, 0.4, 1))
             self.pos = -1
         elif self.pos == 1:
-            self.transmonkey = np.matmul(tr2.translate(0, -0.8, 0), tr2.scale(0.4, 0.4, 1))
+            self.transmonkey = np.matmul(tr2.translate(0, -0.74, 0), tr2.scale(0.4, 0.4, 1))
             self.pos = 0
 
     def move_right(self):
         if self.pos == 0:
-            self.transmonkey = np.matmul(tr2.translate(0.7, -0.8, 0), tr2.scale(-0.4, 0.4, 1))
+            self.transmonkey = np.matmul(tr2.translate(0.7, -0.74, 0), tr2.scale(-0.4, 0.4, 1))
             self.pos = 1
         elif self.pos == -1:
-            self.transmonkey = np.matmul(tr2.translate(0, -0.8, 0), tr2.scale(-0.4, 0.4, 1))
+            self.transmonkey = np.matmul(tr2.translate(0, -0.74, 0), tr2.scale(-0.4, 0.4, 1))
             self.pos= 0
+
+
+    def activate(self):
+        self.logic= not self.logic
+
+    def collide(self, plataforms: 'Plataforms'):
+        deleted_eggs = []
+        n= len(plataforms.cont)
+
+        #si salto y choco con la plataforma qu eestoy revisando, paso
+        #si salto y no choco con la plataforma que estoy revisando: si son dos en esa fila, debo revisar la otra. y si es una, perdi. ¿ cp
+
+
+
 
 class Banana():
 
@@ -99,7 +114,7 @@ class Plataform():
 
     def draw (self, pipeline):
         glUseProgram(pipeline.shaderProgram)
-        self.model.transform = tr2.translate(0.7*self.pos_x, 0.5*self.pos_y, 0)
+        self.model.transform = tr2.translate(0.7*self.pos_x, 0.47*self.pos_y, 0)
         sg.drawSceneGraphNode(self.model, pipeline, "transform")
 
 
@@ -109,43 +124,46 @@ class Plataform():
     def move_right(self):
         self.pos_x=1
 
-    def height(self,cont):
-        if cont==0:
-            self.pos_y= -1
-        if cont==1:
-            self.pos_y= 0
-        if cont==2:
-            self.pos_y= 1
+    def height(self,dy):
+        self.pos_y= dy
 
+    def update(self):
+        self.pos_y -= 1
 
 class Plataforms(object):
     plataforms: List['Plataform']
 
     def __init__(self):
         self.plataforms = []
+        self.cont= []
 
     def create_plataforms(self):
         with open('structure .csv') as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
             line_count = 0
+            dy= -1
             for row in csv_reader:
+                cont = 0
                 for i in range(3):
-                    if row[i] == '1' and line_count<=3:
+                    if row[i] == '1':
                         if i==0:
                             p= Plataform()
                             p.move_left()
-                            p.height(line_count)
+                            p.height(dy)
                             self.plataforms.append(p)
+                            cont+=1
                         elif i==2:
                             p= Plataform()
                             p.move_right()
-                            p.height(line_count)
+                            p.height(dy)
                             self.plataforms.append(p)
+                            cont += 1
                         elif i==1:
                             p= Plataform()
-                            p.height(line_count)
+                            p.height(dy)
                             self.plataforms.append(p)
-
+                            cont += 1
+                dy+=1
                 line_count += 1
 
 
@@ -153,6 +171,9 @@ class Plataforms(object):
         for k in self.plataforms:
             k.draw(pipeline)
 
+    def update(self):
+        for k in self.plataforms:
+            k.update()
 
 
 

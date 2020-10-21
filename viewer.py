@@ -60,6 +60,10 @@ if __name__ == "__main__":
     plataforms= Plataforms()
 
     controller.set_model(monkey)
+    controller.set_plataforms(plataforms)
+
+    # Creamos las plataformas a partir del archivo csv
+    plataforms.create_plataforms()
 
     while not glfw.window_should_close(window):
         # Using GLFW to check for input events
@@ -70,11 +74,11 @@ if __name__ == "__main__":
         else:
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
 
+
         # Clearing the screen in both, color and depth
         glClear(GL_COLOR_BUFFER_BIT)
 
-        #Creamos las plataformas a partir del archivo csv
-        plataforms.create_plataforms()
+        #monkey.collide(plataforms)
 
         # Drawing the shapes
         background.draw(texturepipeline)
