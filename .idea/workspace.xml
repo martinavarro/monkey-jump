@@ -3,12 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="be2369ba-1061-4a8e-96fa-9db1df3fe735" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modelo.py" beforeDir="false" afterPath="$PROJECT_DIR$/modelo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prueba" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/structure .csv" beforeDir="false" afterPath="$PROJECT_DIR$/structure .csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/viewer.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,7 +15,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/monkey-jump.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
+            <state relative-caret-position="-94">
               <caret line="2" selection-start-line="2" selection-end-line="2" />
               <folding>
                 <element signature="e#1#25#0" expanded="true" />
@@ -237,7 +231,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17038691" />
@@ -385,7 +379,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/monkey-jump.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
+        <state relative-caret-position="-94">
           <caret line="2" selection-start-line="2" selection-end-line="2" />
           <folding>
             <element signature="e#1#25#0" expanded="true" />

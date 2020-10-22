@@ -175,7 +175,7 @@ class Plataforms(object):
 
     #crea conjunto plataformas a partir de un archivo csv
     def create_plataforms(self):
-        with open('structure .csv') as csv_file:
+        with open('structure.csv') as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
             line_count = 0
             dy= -1 #se utilizará para ubicar las plataformas a la altura correspondiente
