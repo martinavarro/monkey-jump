@@ -1,16 +1,5 @@
-import sys
-
-import glfw
-import numpy as np
-from OpenGL.GL import *
-
-import basic_shapes as bs
-import easy_shaders as es
-import transformations2 as tr2
 from controller import *
 from modelo import *
-
-
 
 if __name__ == "__main__":
 
@@ -46,14 +35,6 @@ if __name__ == "__main__":
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
-    # Creamos la camara y la proyección
-    projection = tr2.ortho(-1, 1, -1, 1, 0.1, 100)
-    view = tr2.lookAt(
-        np.array([10, 10, 5]),  # Donde está parada la cámara
-        np.array([0, 0, 0]),  # Donde estoy mirando
-        np.array([0, 0, 1])  # Cual es vector UP
-    )
-
     # Creating shapes on GPU memory
     monkey = Monkey("img/mk1.png")
     background = Background("img/jungle.png")
@@ -61,14 +42,14 @@ if __name__ == "__main__":
     banana = Banana("img/banana2.png")
     notice = Notice ("img/win.png")
 
-
+    #setting the objects to the controller
     controller.set_model(monkey)
     controller.set_plataforms(plataforms)
     controller.set_background(background)
     controller.set_banana(banana)
     controller.set_notice(notice)
 
-    # Creamos las plataformas a partir del archivo csv
+    # Creating the plataforms from the csv archive
     plataforms.create_plataforms()
 
     while not glfw.window_should_close(window):
@@ -84,7 +65,7 @@ if __name__ == "__main__":
         # Clearing the screen in both, color and depth
         glClear(GL_COLOR_BUFFER_BIT)
 
-        monkey.collide(plataforms, background, banana, notice)
+        monkey.gamelogic(plataforms, background, banana, notice)
 
         # Drawing the shapes
         background.draw(texturepipeline)

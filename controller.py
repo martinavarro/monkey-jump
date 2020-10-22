@@ -1,7 +1,3 @@
-"""
-Contralor de la aplicación.
-"""
-
 import glfw
 import sys
 
