@@ -76,7 +76,7 @@ class Monkey(object):
 
     #Define la logica del programa: Que pasa cuando el monito choca con las plataformas, que pasa cuando no lo hace.
     #                               Que pasa cuando el monito llega a la banana
-    def collide(self, plataforms: 'Plataforms', background: 'Background', banana: 'Banana', notice: 'Notice'):
+    def gamelogic(self, plataforms: 'Plataforms', background: 'Background', banana: 'Banana', notice: 'Notice'):
         l= self.level
         quantlevels= len(plataforms.cont) #cantidad de niveles
         quantplataforms= len(plataforms.plataforms) #cantidad de plataformas
@@ -178,7 +178,7 @@ class Plataforms(object):
         with open('structure .csv') as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
             line_count = 0
-            dy= -1
+            dy= -1 #se utilizará para ubicar las plataformas a la altura correspondiente
             for row in csv_reader:
                 cont = 0
                 for i in range(3):
