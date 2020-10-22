@@ -55,13 +55,18 @@ if __name__ == "__main__":
     )
 
     # Creating shapes on GPU memory
-    monkey= Monkey("img/me3.png")
-    background= Background("img/bg1.png")
-    plataforms= Plataforms()
+    monkey = Monkey("img/mk1.png")
+    background = Background("img/jungle.png")
+    plataforms = Plataforms()
+    banana = Banana("img/banana2.png")
+    notice = Notice ("img/win.png")
+
 
     controller.set_model(monkey)
     controller.set_plataforms(plataforms)
     controller.set_background(background)
+    controller.set_banana(banana)
+    controller.set_notice(notice)
 
     # Creamos las plataformas a partir del archivo csv
     plataforms.create_plataforms()
@@ -79,12 +84,14 @@ if __name__ == "__main__":
         # Clearing the screen in both, color and depth
         glClear(GL_COLOR_BUFFER_BIT)
 
-        monkey.collide(plataforms, background)
+        monkey.collide(plataforms, background, banana, notice)
 
         # Drawing the shapes
         background.draw(texturepipeline)
-        monkey.draw(texturepipeline, "img/me3.png", "img/me4.png")
+        monkey.draw(texturepipeline, "img/mk1.png", "img/mk2.png", "img/mk4.png")
         plataforms.draw(colorpipeline)
+        banana.draw(texturepipeline)
+        notice.draw(texturepipeline, "img/win.png", "img/go.png")
 
 
         # Once the render is done, buffers are swapped, showing only the complete scene.
